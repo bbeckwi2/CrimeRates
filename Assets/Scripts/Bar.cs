@@ -1,61 +1,77 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bar : MonoBehaviour
-{
-    // The bars drawn on the map
-    [Range(0,1000)]
-    public float size = 10;
+public class Bar : MonoBehaviour {
+    private float size = 10;
+    private float stepSize = 0.01f;
+    private Vector3 initialScale;
 
-    [Range (0,10)]
-    public float stepSize = 0.01f;
-
-    //Offset from the center of the state
-    public Vector3 offSet = new Vector3(0f, 0f, 0f);
-
-    private int asc = 1;
     private float cVal = 0.0f;
     private float goal;
+    private float slowDist;
     public bool isVisable = true;
 
-    public GameObject barPrefab;
     public GameObject bar;
     private Transform barTransform;
     private Vector3 cPos;
+    private float xyScale = 1.0f;
+    private float asc = 1.0f;
+
+    public void initialize(GameObject prefab, Vector3 position, float size = 5f) {
+        this.bar = Instantiate(prefab);
+        this.cPos = position;
+        this.barTransform = this.bar.transform;
+        this.size = size;
+        this.initialScale = barTransform.localScale;
+    }
 
     // Start is called before the first frame update
     void Start() {
-        bar = Instantiate(barPrefab);
-        cPos = gameObject.transform.position + offSet;
-        barTransform = bar.transform;
-        size = 8f * Random.value + 2;
-        stepSize = Random.Range(0.001f, 0.05f);
-        barTransform.position = new Vector3(cPos.x, cPos.y, cPos.z);
-        if (!isVisable)
-            cVal = 0.0f;
     }
 
     // Update is called once per frame
     void Update() {
 
-        if (!isVisable)
+        if (cVal == goal) {
             return;
+        }
 
-        //Demo code
-        cVal += stepSize * asc;
-        cVal = Mathf.Min(size, Mathf.Max(0, cVal));
+        if (goal - slowDist < cVal && cVal < slowDist + goal) {
+            cVal += (stepSize * asc) * Math.Max(Math.Abs(cVal - goal) / slowDist, 0.003f);
+        } else {
+            cVal += (stepSize * asc);
+        }
 
-        if (cVal == 0.0 || cVal == size) {
-            asc *= -1;
+        if (goal - slowDist * 0.005f < cVal && cVal < goal + slowDist * 0.005f) {
+            cVal = goal;
         }
 
         barTransform.position = new Vector3(cPos.x, cPos.y + cVal / 2, cPos.z);
         barTransform.localScale = new Vector3(barTransform.localScale.x, cVal, barTransform.localScale.z);
     }
 
-    //Used to set the height of the bar chart out of 100
+    // Set the width and length of the bar
+    public void setXYScale(float scale) {
+        this.xyScale = scale;
+        barTransform.localScale = new Vector3(initialScale.x * scale, barTransform.localScale.y, initialScale.z * scale);
+    }
+
+    // Used to set the height of the bar chart out of 100
     public void SetGoal(float val) {
         goal = val;
+        slowDist = Math.Abs(cVal - goal) / 4f;
+        if (goal > cVal) {
+            asc = 1.0f;
+        } else {
+            asc = -1.0f;
+        }
+    }
+
+    // If we want to change the material for whatever reason
+    public void setMaterial(Material mat) {
+        Material m = this.bar.GetComponent<Material>();
+        m = mat;
     }
 }

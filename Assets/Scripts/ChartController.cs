@@ -10,21 +10,28 @@ public class ChartController : MonoBehaviour
     public Material normal;
     public Material swap;
 
+    private List<Bars> states;
 
+    void Start() {
+        states = new List<Bars>();
+        foreach (Bars child in GetComponentsInChildren<Bars>()) {
+            states.Add(child);
+        }
+
+        print(states.Count);
+
+        foreach (Bars b in states) {
+            print(b);
+            b.addBar("Test", Random.value * 10f);
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
-        
-        if (Random.value < 0.0025) {
-            Bar b;
-            foreach (Bar child in GetComponentsInChildren<Bar>()) {
-                if (Random.value < 0.25) {
-                    child.bar.GetComponent<Renderer>().material = swap;
-                    //child.material = swap;
-                } else {
-                    child.bar.GetComponent<Renderer>().material = normal;
-                    //child.material = normal;
-                }
+        if (Random.value < 0.0005) {
+            foreach (Bars b in states) {
+                b.setGoal("Test", Random.value * 10f);
             }
         }
     }
