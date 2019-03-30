@@ -61,7 +61,7 @@ public class Bar : MonoBehaviour {
     // Used to set the height of the bar chart out of 100
     public void SetGoal(float val) {
         goal = val;
-        slowDist = Math.Abs(cVal - goal) / 4f;
+        slowDist = Math.Min(Math.Abs(cVal - goal) / 4f, 2f);
         if (goal > cVal) {
             asc = 1.0f;
         } else {
@@ -73,5 +73,10 @@ public class Bar : MonoBehaviour {
     public void setMaterial(Material mat) {
         Material m = this.bar.GetComponent<Material>();
         m = mat;
+    }
+
+    //Good enough for government work!
+    public float getRoughScale() {
+        return barTransform.localScale.x;
     }
 }

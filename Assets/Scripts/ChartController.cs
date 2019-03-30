@@ -9,19 +9,20 @@ public class ChartController : MonoBehaviour
     // It will later be used to orchestrate the bar movements
     public Material normal;
     public Material swap;
+    public GameObject prefab;
 
-    private List<Bars> states;
+    private Dictionary<string, Bars> states;
 
     void Start() {
-        states = new List<Bars>();
+        states = new Dictionary<string, Bars>();
+
         foreach (Bars child in GetComponentsInChildren<Bars>()) {
-            states.Add(child);
+            // If we initialize there are no errors
+            child.initialize(); 
+            states.Add(child.name, child);
         }
 
-        print(states.Count);
-
-        foreach (Bars b in states) {
-            print(b);
+        foreach (Bars b in states.Values) {
             b.addBar("Test", Random.value * 10f);
         }
 
@@ -30,7 +31,7 @@ public class ChartController : MonoBehaviour
     void Update()
     {
         if (Random.value < 0.0005) {
-            foreach (Bars b in states) {
+            foreach (Bars b in states.Values) {
                 b.setGoal("Test", Random.value * 10f);
             }
         }
