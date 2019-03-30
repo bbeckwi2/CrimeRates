@@ -24,6 +24,7 @@ public class ChartController : MonoBehaviour
 
         foreach (Bars b in states.Values) {
             b.addBar("Test", Random.value * 10f);
+            b.addBar("Testing", Random.value * 10f);
         }
 
     }

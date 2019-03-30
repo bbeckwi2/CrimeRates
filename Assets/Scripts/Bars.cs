@@ -11,7 +11,6 @@ public class Bars : MonoBehaviour
     public Vector3 offSet;
     private Vector3 bounding;
     private MeshCollider collide;
-    public bool ready = false;
 
     // Start is called before the first frame update
     void Start() {}
@@ -19,25 +18,20 @@ public class Bars : MonoBehaviour
     public void initialize() {
         collide = GetComponent<MeshCollider>();
         bounding = collide.bounds.size / 2;
-        ready = true;
     }
 
     public bool addBar(string name, float initialValue) {
-        if (!ready) {
-            print(gameObject.name);
-            print("Didn't add");
-            return false;
-        }
         if (bars.ContainsKey(name)) {
             return false;
         } else {
             Bar b = gameObject.AddComponent<Bar>();
             Vector3 pos = gameObject.transform.position + offSet;
+
             int canValid = 20;
             Vector3 potPos = pos;
             while (canValid > 0) {
                 bool canEscape = true;
-                potPos = pos + new Vector3(Random.value * bounding.x/3, 0, Random.value * bounding.z/2);
+                potPos = pos + new Vector3(Random.value * bounding.x/2 * ((Random.value < .5)? -1f : 1f), 0, Random.value * bounding.z/2 * ((Random.value < .5) ? -1f : 1f));
                 foreach (Bar x in bars.Values) {
                     Vector3 bPos = x.transform.position;
                     double rScale = x.getRoughScale() * 2;
@@ -46,9 +40,22 @@ public class Bars : MonoBehaviour
                         break;
                     }
                 }
-                if (!collide.bounds.Contains(potPos)){
+                //if (!collide.bounds.Contains(potPos)){
+                print(Physics.CheckSphere(potPos, 0.0001f));
+                if (Physics.CheckSphere(potPos, 0.0001f)) {
+                    Collider[] cols = Physics.OverlapSphere(potPos, 0.001f);
+                    print(cols);
+                    foreach (Collider c in cols) {
+                        if (c.name != this.name) {
+                            canEscape = false;
+                            break;
+                        }
+                    }
+                    print(collide.name);
+                } else {
                     canEscape = false;
                 }
+
                 if (canEscape) {
                     break;
                 }
@@ -83,7 +90,4 @@ public class Bars : MonoBehaviour
         return bars.Keys.ToArray<string>();
     }
     
-    public bool isReady() {
-        return ready;
-    }
 }
