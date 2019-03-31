@@ -10,14 +10,17 @@ public class Bars : MonoBehaviour
 
     public Vector3 offSet;
     private Vector3 bounding;
-    private MeshCollider collide;
+    private BoxCollider collide;
 
     // Start is called before the first frame update
     void Start() {}
 
     public void initialize() {
-        collide = GetComponent<MeshCollider>();
+        collide = gameObject.GetComponent<BoxCollider>();
+        print(this);
+        print(collide.bounds.center);
         bounding = collide.bounds.size / 2;
+        gameObject.SetActive(true);
     }
 
     public bool addBar(string name, float initialValue) {
@@ -29,9 +32,12 @@ public class Bars : MonoBehaviour
 
             int canValid = 20;
             Vector3 potPos = pos;
+            print(collide.name);
+            print(collide.center);
             while (canValid > 0) {
                 bool canEscape = true;
-                potPos = pos + new Vector3(Random.value * bounding.x/2 * ((Random.value < .5)? -1f : 1f), 0, Random.value * bounding.z/2 * ((Random.value < .5) ? -1f : 1f));
+                potPos = new Vector3(((Random.value - 0.5f) * bounding.x) + collide.bounds.center.x, pos.y, ((Random.value - 0.5f) * bounding.z) + collide.bounds.center.z);
+                //potPos = pos + new Vector3(Random.value * bounding.x/2 * ((Random.value < .5)? -1f : 1f), 0, Random.value * bounding.z/2 * ((Random.value < .5) ? -1f : 1f));
                 foreach (Bar x in bars.Values) {
                     Vector3 bPos = x.transform.position;
                     double rScale = x.getRoughScale() * 2;
@@ -40,22 +46,7 @@ public class Bars : MonoBehaviour
                         break;
                     }
                 }
-                //if (!collide.bounds.Contains(potPos)){
-                print(Physics.CheckSphere(potPos, 0.0001f));
-                if (Physics.CheckSphere(potPos, 0.0001f)) {
-                    Collider[] cols = Physics.OverlapSphere(potPos, 0.001f);
-                    print(cols);
-                    foreach (Collider c in cols) {
-                        if (c.name != this.name) {
-                            canEscape = false;
-                            break;
-                        }
-                    }
-                    print(collide.name);
-                } else {
-                    canEscape = false;
-                }
-
+                
                 if (canEscape) {
                     break;
                 }
