@@ -11,6 +11,15 @@ public class Bars : MonoBehaviour
     public Vector3 offSet;
     private Vector3 bounding;
     private BoxCollider collide;
+    private int colorIndex = 0;
+    private static Color[] colors = new Color[] {
+                             new Color(1f, 0f, 0f, 0.85f),
+                             new Color(0f, 0f, 1f, 0.85f),
+                             new Color(0f, 1f, 0f, 0.85f),
+                             new Color(1f, 0.5f, 0.5f, 0.85f),
+                             new Color(0.5f, 1f, 0.5f, 0.85f),
+                             new Color(0.5f, 0.5f, 1f, 0.85f),
+    };
 
     // Start is called before the first frame update
     void Start() {}
@@ -19,7 +28,7 @@ public class Bars : MonoBehaviour
         collide = gameObject.GetComponent<BoxCollider>();
         print(this);
         print(collide.bounds.center);
-        bounding = collide.bounds.size / 2;
+        bounding = collide.bounds.size / 1.5f;
         gameObject.SetActive(true);
     }
 
@@ -53,6 +62,8 @@ public class Bars : MonoBehaviour
                 canValid--;
             }
             b.initialize(prefab, potPos);
+            b.setColor(colors[colorIndex]);
+            colorIndex = (colorIndex + 1) % colors.Length;
             bars.Add(name, b);
             this.setGoal(name, initialValue);
             return true;

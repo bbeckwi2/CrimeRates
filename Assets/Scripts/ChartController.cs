@@ -25,6 +25,10 @@ public class ChartController : MonoBehaviour
         foreach (Bars b in states.Values) {
             b.addBar("Test", Random.value * 10f);
             b.addBar("Testing", Random.value * 10f);
+            b.addBar("AnotherTest", Random.value * 10f);
+            b.addBar("OneMore", Random.value * 10f);
+            b.addBar("MaybeTwo", Random.value * 10f);
+            b.addBar("AhThree", Random.value * 10f);
         }
 
     }
@@ -34,6 +38,11 @@ public class ChartController : MonoBehaviour
         if (Random.value < 0.0005) {
             foreach (Bars b in states.Values) {
                 b.setGoal("Test", Random.value * 10f);
+                b.setGoal("Testing", Random.value * 10f);
+                b.setGoal("AnotherTest", Random.value * 10f);
+                b.setGoal("OneMore", Random.value * 10f);
+                b.setGoal("MaybeTwo", Random.value * 10f);
+                b.setGoal("AhThree", Random.value * 10f);
             }
         }
     }

@@ -75,6 +75,10 @@ public class Bar : MonoBehaviour {
         m = mat;
     }
 
+    public void setColor(Color color) {
+        this.bar.GetComponent<Renderer>().material.color = color;
+    }
+
     //Good enough for government work!
     public float getRoughScale() {
         return barTransform.localScale.x;
