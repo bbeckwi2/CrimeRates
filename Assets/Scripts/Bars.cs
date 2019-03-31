@@ -26,8 +26,6 @@ public class Bars : MonoBehaviour
 
     public void initialize() {
         collide = gameObject.GetComponent<BoxCollider>();
-        print(this);
-        print(collide.bounds.center);
         bounding = collide.bounds.size / 1.5f;
         gameObject.SetActive(true);
     }
@@ -41,8 +39,6 @@ public class Bars : MonoBehaviour
 
             int canValid = 20;
             Vector3 potPos = pos;
-            print(collide.name);
-            print(collide.center);
             while (canValid > 0) {
                 bool canEscape = true;
                 potPos = new Vector3(((Random.value - 0.5f) * bounding.x) + collide.bounds.center.x, pos.y, ((Random.value - 0.5f) * bounding.z) + collide.bounds.center.z);
