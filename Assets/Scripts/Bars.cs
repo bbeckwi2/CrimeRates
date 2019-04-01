@@ -34,7 +34,6 @@ public class Bars : MonoBehaviour
         if (bars.ContainsKey(name)) {
             return false;
         } else {
-            Bar b = gameObject.AddComponent<Bar>();
             Vector3 pos = gameObject.transform.position + offSet;
 
             int canValid = 20;
@@ -57,10 +56,15 @@ public class Bars : MonoBehaviour
                 }
                 canValid--;
             }
-            b.initialize(prefab, potPos);
+            GameObject ba = Instantiate(prefab);
+            Bar b = ba.AddComponent<Bar>();
+            b.bar = ba;
+            b.initialize(potPos);
             b.setColor(colors[colorIndex]);
             colorIndex = (colorIndex + 1) % colors.Length;
             bars.Add(name, b);
+            b.setLabel(name);
+
             this.setGoal(name, initialValue);
             return true;
         }

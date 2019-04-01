@@ -18,9 +18,9 @@ public class Bar : MonoBehaviour {
     private Vector3 cPos;
     private float xyScale = 1.0f;
     private float asc = 1.0f;
+    private string label;
 
-    public void initialize(GameObject prefab, Vector3 position, float size = 5f) {
-        this.bar = Instantiate(prefab);
+    public void initialize(Vector3 position, float size = 5f) {
         this.cPos = position;
         this.barTransform = this.bar.transform;
         this.size = size;
@@ -82,5 +82,13 @@ public class Bar : MonoBehaviour {
     //Good enough for government work!
     public float getRoughScale() {
         return barTransform.localScale.x;
+    }
+
+    public void setLabel(string label) {
+        this.label = label; 
+    }
+
+    public string getLabel() {
+        return label;
     }
 }
