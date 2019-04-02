@@ -30,7 +30,7 @@ public class Bars : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public bool addBar(string name, float initialValue) {
+    public bool addBar(string name, float initialValue, string label = "") {
         if (bars.ContainsKey(name)) {
             return false;
         } else {
@@ -44,7 +44,7 @@ public class Bars : MonoBehaviour
                 //potPos = pos + new Vector3(Random.value * bounding.x/2 * ((Random.value < .5)? -1f : 1f), 0, Random.value * bounding.z/2 * ((Random.value < .5) ? -1f : 1f));
                 foreach (Bar x in bars.Values) {
                     Vector3 bPos = x.transform.position;
-                    double rScale = x.getRoughScale() * 2;
+                    double rScale = x.getRoughScale() * 4;
                     if (potPos.x > bPos.x - rScale && potPos.x < bPos.x + rScale && potPos.z > bPos.z - rScale && potPos.z < bPos.z + rScale) {
                         canEscape = false;
                         break;
@@ -63,7 +63,10 @@ public class Bars : MonoBehaviour
             b.setColor(colors[colorIndex]);
             colorIndex = (colorIndex + 1) % colors.Length;
             bars.Add(name, b);
-            b.setLabel(name);
+            if (label == "") {
+                label = name;
+            }
+            b.setLabel(label);
 
             this.setGoal(name, initialValue);
             return true;
