@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ChartController : MonoBehaviour
 {
     // Our bar controller class. 
@@ -10,12 +11,16 @@ public class ChartController : MonoBehaviour
     public Material normal;
     public Material swap;
     public GameObject prefab;
-
+    public CSVReader reader;
     private Dictionary<string, Bars> states;
 
     void Start() {
-        states = new Dictionary<string, Bars>();
 
+        states = new Dictionary<string, Bars>();
+        reader = new CSVReader("Assets/Crime_Rate.csv");
+        foreach(string c in reader.categories) {
+            print(c);
+        }
         foreach (Bars child in GetComponentsInChildren<Bars>()) {
             // If we initialize there are no errors
             child.initialize(); 
