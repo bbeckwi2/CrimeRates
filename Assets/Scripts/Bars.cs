@@ -9,6 +9,7 @@ public class Bars : MonoBehaviour
     public GameObject prefab;
 
     public Vector3 offSet;
+    public float scale = 1.0f;
     private Vector3 bounding;
     private BoxCollider collide;
     private int colorIndex = 0;
@@ -43,8 +44,9 @@ public class Bars : MonoBehaviour
                 potPos = new Vector3(((Random.value - 0.5f) * bounding.x) + collide.bounds.center.x, pos.y, ((Random.value - 0.5f) * bounding.z) + collide.bounds.center.z);
                 //potPos = pos + new Vector3(Random.value * bounding.x/2 * ((Random.value < .5)? -1f : 1f), 0, Random.value * bounding.z/2 * ((Random.value < .5) ? -1f : 1f));
                 foreach (Bar x in bars.Values) {
-                    Vector3 bPos = x.transform.position;
-                    double rScale = x.getRoughScale() * 4;
+                    Vector3 bPos = x.getTransform().position;
+                    print(bPos);
+                    double rScale = x.getRoughScale();
                     if (potPos.x > bPos.x - rScale && potPos.x < bPos.x + rScale && potPos.z > bPos.z - rScale && potPos.z < bPos.z + rScale) {
                         canEscape = false;
                         break;
@@ -61,6 +63,8 @@ public class Bars : MonoBehaviour
             b.bar = ba;
             b.initialize(potPos);
             b.setColor(colors[colorIndex]);
+            b.setXYScale(this.scale);
+            print(b.getTransform().position);
             colorIndex = (colorIndex + 1) % colors.Length;
             bars.Add(name, b);
             if (label == "") {

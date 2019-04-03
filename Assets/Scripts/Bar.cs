@@ -23,6 +23,7 @@ public class Bar : MonoBehaviour {
     public void initialize(Vector3 position, float size = 5f) {
         this.cPos = position;
         this.barTransform = this.bar.transform;
+        this.barTransform.position = cPos;
         this.size = size;
         this.initialScale = barTransform.localScale;
     }
@@ -75,6 +76,9 @@ public class Bar : MonoBehaviour {
         m = mat;
     }
     
+    public Transform getTransform() {
+        return barTransform;
+    }
 
     // Set the bar's color
     public void setColor(Color color) {
