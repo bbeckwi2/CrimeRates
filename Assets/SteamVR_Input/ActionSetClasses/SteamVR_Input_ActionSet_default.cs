@@ -73,14 +73,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Single Squeeze
-        {
-            get
-            {
-                return SteamVR_Actions.default_Squeeze;
-            }
-        }
-        
         public virtual SteamVR_Action_Boolean HeadsetOnHead
         {
             get
@@ -102,6 +94,14 @@ namespace Valve.VR
             get
             {
                 return SteamVR_Actions.default_TimeBackward;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean Timeshow
+        {
+            get
+            {
+                return SteamVR_Actions.default_Timeshow;
             }
         }
         

@@ -5,19 +5,21 @@ using UnityEngine;
 public class Hover_Show : MonoBehaviour
 {
     public GameObject fontMesh;
-    Collider collide;
-    GameObject bar;
+
     public GameObject head;
-    int chance = 0;
-    int maxChance = 50;
-    Collider collideWith;
-    Color color;
-    Material mat;
+    public int fadeDelay = 50;
+
+    [Range(1,1000)]
+    int fade = 0;
+
+    private Collider collide;
+    private GameObject bar;
+    private Collider collideWith;
+    private Color color;
 
     // Start is called before the first frame update
     void Start() {
         collide = fontMesh.GetComponent<BoxCollider>();
-        mat = fontMesh.GetComponent<Material>();
         color = Color.white;
     }
 
@@ -25,15 +27,12 @@ public class Hover_Show : MonoBehaviour
     void Update() {
         if (bar != null) {
             fontMesh.transform.position = this.transform.position + Vector3.up * 0.05f;
-            Vector3 msh = fontMesh.transform.eulerAngles;
-            Vector3 ctr = this.transform.rotation.eulerAngles;
-            msh.y = ctr.y;
-            fontMesh.transform.rotation = Quaternion.Euler(msh);
             color.a = 1.0f;
             fontMesh.GetComponent<MeshRenderer>().material.color = color;
-        } else if (chance > 0) {
-            chance--;
-            color.a = ((float)chance) / ((float)maxChance);
+        } else if (fade > 0) {
+            fade--;
+            color.a = ((float)fade) / ((float)fadeDelay);
+            fontMesh.transform.position = this.transform.position + Vector3.up * 0.05f;
             fontMesh.GetComponent<MeshRenderer>().material.color = color;
         } else {
             fontMesh.transform.position = new Vector3(0f, -1000f, 0f);
@@ -44,12 +43,11 @@ public class Hover_Show : MonoBehaviour
     // Draw the label when we put our hand into the bar
     private void OnTriggerEnter(Collider col) {
         if (col.gameObject.name == "Bar(Clone)" && bar == null) {
-            TextMesh m = fontMesh.GetComponent<TextMesh>();
+            TextMesh mesh = fontMesh.GetComponent<TextMesh>();
             Bar b = col.gameObject.GetComponent<Bar>();
-            print(b);
-            m.text = b.getLabel();
+            mesh.text = b.getLabel();
             bar = col.gameObject;
-            chance = maxChance;
+            fade = fadeDelay;
             collideWith = col;
         }
     }

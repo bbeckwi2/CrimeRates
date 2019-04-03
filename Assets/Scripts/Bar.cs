@@ -11,7 +11,6 @@ public class Bar : MonoBehaviour {
     private float cVal = 0.0f;
     private float goal;
     private float slowDist;
-    public bool isVisable = true;
 
     public GameObject bar;
     private Transform barTransform;
@@ -20,6 +19,7 @@ public class Bar : MonoBehaviour {
     private float asc = 1.0f;
     private string label;
 
+    // Initialize the bar (Makes sure it loads correctly)
     public void initialize(Vector3 position, float size = 5f) {
         this.cPos = position;
         this.barTransform = this.bar.transform;
@@ -74,7 +74,9 @@ public class Bar : MonoBehaviour {
         Material m = this.bar.GetComponent<Material>();
         m = mat;
     }
+    
 
+    // Set the bar's color
     public void setColor(Color color) {
         this.bar.GetComponent<Renderer>().material.color = color;
     }
@@ -84,10 +86,12 @@ public class Bar : MonoBehaviour {
         return barTransform.localScale.x;
     }
 
+    // Set the bar's label
     public void setLabel(string label) {
         this.label = label; 
     }
 
+    // Get the bar's label
     public string getLabel() {
         return label;
     }

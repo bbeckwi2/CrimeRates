@@ -13,12 +13,16 @@ public class ChartController : MonoBehaviour
     public Material swap;
     public GameObject prefab;
     public CSVReader reader;
+    
+    // Set these to the fields you wish to examine
     private string[] interests = { "Violent Crime", "Robbery", "Burglary", "Motor Theft" };
 
-    public int smallestDate = 30000;
-    public int largestDate = 0;
-    private string cDate;
+    private int smallestDate = 30000;
+    private int largestDate = 0;
+
+    public string cDate = "1996";
     private int iDate = 1996;
+
     public float maxHeight = 10f;
 
     private Dictionary<string, Bars> states;
@@ -62,6 +66,7 @@ public class ChartController : MonoBehaviour
 
         Dictionary<string, float> scales = new Dictionary<string, float>();
 
+        // Get the scale of the data and use it to normalize
         foreach (string s in interests) {
             float mVal = 0.000000000000000001f;
 
@@ -73,6 +78,7 @@ public class ChartController : MonoBehaviour
             scales.Add(s, mVal);
         }
 
+        // Set the values for each of the states
         foreach (String state in states.Keys) {
             Bars bars = states[state];
             foreach (string s in interests) {
@@ -83,6 +89,7 @@ public class ChartController : MonoBehaviour
         }
     }
 
+    // Set the year to the specified year
     public void setCurrentYear(int year) {
 
         print("Setting the year to: " + year);
@@ -114,11 +121,13 @@ public class ChartController : MonoBehaviour
         }
     }
 
+    // Set's the date (Updates string and int value)
     private void setDate(int date) {
         iDate = date;
         cDate = iDate.ToString();
     }
 
+    // Move fowards one year
     public string forwardYear() {
         if (iDate < largestDate - 1) {
             setCurrentYear(iDate + 1);
@@ -126,6 +135,7 @@ public class ChartController : MonoBehaviour
         return cDate;
     }
 
+    // Move backwards one year
     public string backwardYear() {
         if (iDate > smallestDate + 1) {
             setCurrentYear(iDate - 1);
