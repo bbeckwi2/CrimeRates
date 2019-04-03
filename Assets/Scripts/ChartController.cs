@@ -119,20 +119,18 @@ public class ChartController : MonoBehaviour
         cDate = iDate.ToString();
     }
 
-    public bool forwardYear() {
+    public string forwardYear() {
         if (iDate < largestDate - 1) {
             setCurrentYear(iDate + 1);
-            return true;
         }
-        return false;
+        return cDate;
     }
 
-    public bool backwardYear() {
+    public string backwardYear() {
         if (iDate > smallestDate + 1) {
             setCurrentYear(iDate - 1);
-            return true;
         }
-        return false;
+        return cDate;
     }
 
 

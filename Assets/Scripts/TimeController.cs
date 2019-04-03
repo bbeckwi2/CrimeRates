@@ -10,27 +10,31 @@ public class TimeController : MonoBehaviour
     public SteamVR_Action_Boolean backwardAction;
     public SteamVR_Action_Boolean forwardAction;
     public GameObject masterObject;
+    public GameObject textObject;
     private ChartController chart;
+    private YearDisplay text;
     public int skipDelay = 100;
     private int skip = 0;
 
     // Start is called before the first frame update
     void Start() {
         chart = masterObject.GetComponent<ChartController>();
+        text = textObject.GetComponent<YearDisplay>();
     }
 
     // Update is called once per frame
     void Update() {
         if (forwardAction.GetState(handType)) {
             if (skip == 0) {
-                chart.forwardYear();
+                text.show(chart.forwardYear());
                 skip++;
             }
             skip = (skip + 1) % skipDelay;
             
         } else if (backwardAction.GetState(handType)) {
             if (skip == 0) {
-                chart.backwardYear();
+                text.show(chart.backwardYear());
+                skip++;
             }
             skip = (skip + 1) % skipDelay;
             
