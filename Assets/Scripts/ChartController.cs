@@ -15,15 +15,18 @@ public class ChartController : MonoBehaviour
     public CSVReader reader;
     private string[] interests = { "Violent Crime", "Robbery", "Burglary", "Motor Theft" };
 
-    private int smallestDate = 30000;
-    private int largestDate = 0;
-    private string cDate = "1996";
+    public int smallestDate = 30000;
+    public int largestDate = 0;
+    private string cDate;
+    private int iDate = 1996;
     public float maxHeight = 10f;
 
     private Dictionary<string, Bars> states;
     // Year, state, crime = amount
     private Dictionary<string, Dictionary<string, Dictionary<string, float>>> crimes;
     void Start() {
+
+        cDate = iDate.ToString();
 
         crimes = new Dictionary<string, Dictionary<string, Dictionary<string, float>>>();
         
@@ -70,18 +73,66 @@ public class ChartController : MonoBehaviour
             scales.Add(s, mVal);
         }
 
-        foreach (Bars bars in states.Values) {
-            foreach(string s in interests) {
+        foreach (String state in states.Keys) {
+            Bars bars = states[state];
+            foreach (string s in interests) {
                 string title = s;
-                print(cDate);
-                print(bars.name);
-                print(s);
                 float value = crimes[cDate][bars.name][s];
-
-                bars.addBar(title, (value / scales[s]) * maxHeight, title + System.Environment.NewLine + "[" + value.ToString("0.###") + "]");
-                
+                bars.addBar(title, (value / scales[s]) * maxHeight, title + System.Environment.NewLine + "[" + value.ToString("0.###") + "]" + System.Environment.NewLine + state);
             }            
         }
+    }
+
+    public void setCurrentYear(int year) {
+
+        print("Setting the year to: " + year);
+        if (year < smallestDate || year > largestDate) {
+            return;
+        }
+        setDate(year);
+        Dictionary<string, float> scales = new Dictionary<string, float>();
+
+        foreach (string s in interests) {
+            float mVal = 0.000000000000000001f;
+
+            Dictionary<string, Dictionary<string, float>> st = crimes[cDate];
+            foreach (string sV in st.Keys) {
+                mVal = Math.Max(mVal, st[sV][s]);
+            }
+
+            scales.Add(s, mVal);
+        }
+
+        foreach (String state in states.Keys) {
+            Bars bars = states[state];
+            foreach (string s in interests) {
+                string title = s;
+                float value = crimes[cDate][bars.name][s];
+                bars.setGoal(title, (value / scales[s]) * maxHeight);
+                bars.setLabel(title, title + System.Environment.NewLine + "[" + value.ToString("0.###") + "]" + System.Environment.NewLine + state);
+            }
+        }
+    }
+
+    private void setDate(int date) {
+        iDate = date;
+        cDate = iDate.ToString();
+    }
+
+    public bool forwardYear() {
+        if (iDate < largestDate - 1) {
+            setCurrentYear(iDate + 1);
+            return true;
+        }
+        return false;
+    }
+
+    public bool backwardYear() {
+        if (iDate > smallestDate + 1) {
+            setCurrentYear(iDate - 1);
+            return true;
+        }
+        return false;
     }
 
 

@@ -82,6 +82,12 @@ public class Bars : MonoBehaviour
         }
     }
 
+    public void setLabel(string name, string label) {
+        if (bars.ContainsKey(name)) {
+            bars[name].setLabel(label);
+        } 
+    }
+
     public bool deleteBar(string name) {
         if (bars.ContainsKey(name)) {
             bars.Remove(name);

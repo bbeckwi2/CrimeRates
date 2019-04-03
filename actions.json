@@ -41,6 +41,14 @@
       "requirement": "optional"
     },
     {
+      "name": "/actions/default/in/TimeForward",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/TimeBackward",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     }
