@@ -39,13 +39,19 @@ public class Bar : MonoBehaviour {
             return;
         }
 
+        if (goal > cVal) {
+            asc = 1.0f;
+        } else {
+            asc = -1.0f;
+        }
+
         if (goal - slowDist < cVal && cVal < slowDist + goal) {
             cVal += (stepSize * asc) * Math.Max(Math.Abs(cVal - goal) / slowDist, 0.003f);
         } else {
             cVal += (stepSize * asc);
         }
 
-        if (goal - slowDist * 0.005f < cVal && cVal < goal + slowDist * 0.005f) {
+        if (goal - slowDist * 0.01f < cVal && cVal < goal + slowDist * 0.01f) {
             cVal = goal;
         }
 
