@@ -48,6 +48,14 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/MoveUp",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/MoveDown",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     }

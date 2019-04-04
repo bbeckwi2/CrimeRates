@@ -61,6 +61,12 @@
                   "east" : {
                      "output" : "/actions/default/in/timeforward"
                   },
+                  "north" : {
+                     "output" : "/actions/default/in/moveup"
+                  },
+                  "south" : {
+                     "output" : "/actions/default/in/movedown"
+                  },
                   "west" : {
                      "output" : "/actions/default/in/timebackward"
                   }
@@ -75,6 +81,12 @@
                "inputs" : {
                   "east" : {
                      "output" : "/actions/default/in/timeforward"
+                  },
+                  "north" : {
+                     "output" : "/actions/default/in/moveup"
+                  },
+                  "south" : {
+                     "output" : "/actions/default/in/movedown"
                   },
                   "west" : {
                      "output" : "/actions/default/in/timebackward"

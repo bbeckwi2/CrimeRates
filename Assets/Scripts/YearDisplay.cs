@@ -5,12 +5,12 @@ using UnityEngine;
 public class YearDisplay : MonoBehaviour
 {
 
-    public GameObject fontMesh;
     public GameObject head;
 
     [Range(1,1000)]
     public int fadeDelay;
 
+    private GameObject fontMesh;
     private int fade = 0;
     private bool dir = false;
     private Material mat;
@@ -18,7 +18,9 @@ public class YearDisplay : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start() {}
+    void Start() {
+        fontMesh = this.gameObject;
+    }
 
     // Update is called once per frame
     void Update() {
