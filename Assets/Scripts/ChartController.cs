@@ -15,8 +15,7 @@ public class ChartController : MonoBehaviour
     public CSVReader reader;
     
     // Set these to the fields you wish to examine
-    private string[] interests = { "Violent Crime", "Robbery", "Burglary", "Motor Theft" };
-
+    private string[] interests = { "Violent Crimes", "Homicide", "Rape", "Property Crimes" };
     private int smallestDate = 30000;
     private int largestDate = 0;
 
@@ -60,7 +59,7 @@ public class ChartController : MonoBehaviour
         // Populate the data 
         for (int i=0; i < reader.data["Year"].Count; i++) {
             foreach (string s in interests) {
-                crimes[reader.data["Year"][i]][reader.data["State Name"][i]].Add(s, float.Parse(reader.data[s][i]));
+                crimes[reader.data["Year"][i]][reader.data["State Name"][i]].Add(s, float.Parse(reader.data[s][i]) * 10f);
             }
         }
 
