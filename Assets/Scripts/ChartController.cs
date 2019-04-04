@@ -59,7 +59,7 @@ public class ChartController : MonoBehaviour
         // Populate the data 
         for (int i=0; i < reader.data["Year"].Count; i++) {
             foreach (string s in interests) {
-                crimes[reader.data["Year"][i]][reader.data["State Name"][i]].Add(s, float.Parse(reader.data[s][i]));
+                crimes[reader.data["Year"][i]][reader.data["State Name"][i]].Add(s, float.Parse(reader.data[s][i]) );
             }
         }
 
